@@ -1,31 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
-import { CanonicalService } from './shared/canonical.service';
-
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from "@angular/router";
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
-export class AppComponent implements OnInit {
-
-  constructor(
-    private metaTagService: Meta,
-    private canonicalService: CanonicalService
-  ) { }
-
-  ngOnInit() {
-    this.canonicalService.setCanonicalURL();
-
-    this.metaTagService.addTags([
-      { name: 'keywords', content: 'Angular SEO Integration, Music CRUD, Angular Universal' },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Digamber Singh' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2019-10-31', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' }
-    ]);
+export class AppComponent {
+  // title = 'RDD';
+  constructor(private meta: Meta, private title: Title, private router: Router) {
+    this.meta.addTags([
+      { name: 'description', content: 'SEO friendly' },
+      { name: 'author', content: 'WebStar' },
+      { name: 'keywords', content: 'RomDomDom, Rom, test' }
+    ])
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+      // window.scrollTo(0, 0)
+    });
   }
+
 }
